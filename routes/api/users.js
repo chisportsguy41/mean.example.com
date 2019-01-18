@@ -45,9 +45,7 @@ router.put('/', function(req, res){
 
   if(err) {
     return res.json({success: false, error: err});
-  }
-
-  if(user) {
+  }else if(user) {
 
     let data = req.body;
 
