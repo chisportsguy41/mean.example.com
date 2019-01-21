@@ -29,7 +29,6 @@ var authApp = (function() {
     var app = document.getElementById('app');
 
     var form =  `
-
         <div class="card login-form">
           <form id="registrationForm" class="card-body">
             <h1 class="card-title text-center">Create an Account</h1>
@@ -109,11 +108,58 @@ var authApp = (function() {
 
   return {
     load: function(){
-      registrationForm();
-      postRequest('registrationForm', '/api/auth/register');
+      switch(window.location.hash){
+        case '#register':
+          registrationForm();
+          postRequest('registrationForm', '/api/auth/register');
+          validate.registrationForm();
+          break;
+
+        default:
+          loginForm();
+          postRequest('loginForm', '/api/auth/login');
+          break;
+      }
+    }
+  }
+})();
+
+var validate = (function() {
+  function confirmPasswordMatch() {
+    let pw = document.getElementById('password');
+    let cpw = document.getElementById('confirm_password');
+
+    if(pw.value !== cpw.value){
+      cpw.setCustomValidity("Passwords do not match");
+    } else {
+      cpw.setCustomValidity("");
     }
   }
 
+  function validateEmail() {
+    let email = document.getElementById('email');
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(re.test(String(email.value).toLowerCase())){
+      email.setCustomValidity("");
+    } else {
+      email.setCustomValidity("Invalid Email (xx@xx.xx)");
+    }
+  }
+
+  return {
+    registrationForm: function(){
+      document.querySelector('#registrationForm input[type="submit"]').addEventListener(
+        'click',
+        function(){
+          validateEmail();
+          confirmPasswordMatch();
+      });
+    }
+  }
 })();
 
 authApp.load();
+
+window.addEventListener("hashchange", function(){
+  authApp.load();
+});
