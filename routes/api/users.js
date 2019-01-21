@@ -4,7 +4,7 @@ var router = express.Router();
 var Users = require('../../models/users');
 
 router.get('/', function(req, res, next) {
-  Users.find({}, null, {sort: 'last_name'}, function(err, users){
+  Users.find({}, null, {sort: 'username'}, function(err, users){
     if(err){
      return res.json({'success':false, 'error': err});
    }
