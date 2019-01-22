@@ -60,6 +60,40 @@ var usersApp = (function() {
     }
   }
 
+  function viewOneUser(id) {
+    let uri = `${window.location.origin}/api/users/${id}`;
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', uri);
+
+    xhr.setRequestHeader(
+      'Content-Type',
+      'appllication/json; charset=UTF-8'
+    );
+
+    xhr.send();
+
+    xhr.onload = function() {
+      let app = document.getElementById('app');
+      let data = JSON.parse(xhr.response);
+      let card = '';
+
+      card = `<div class="card">
+        <div class="card-header clearfix">
+          <h2 class="h3 float-left">${data.user.first_name} ${data.user.last_name}</h2>
+          <div class="float-right">
+            <a href="#edit-${data.user._id}" class="btn btn-primary">Edit</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div>${data.user.username}</div>
+          <div>${data.user.email}</div>
+        </div>
+      </div>`;
+
+      app.innerHTML = card;
+    }
+  }
+
   function createUser(){
     var app = document.getElementById('app');
 
@@ -154,7 +188,7 @@ var usersApp = (function() {
           break;
 
         case '#view':
-          console.log('VIEW');
+          viewOneUser(hashArray[1]);
           break;
 
         case '#edit':
