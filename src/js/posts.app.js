@@ -105,13 +105,13 @@ var postsApp = (function() {
           <div class="card-body">
           <form id="createPost" class="card-body">
             <div id="formMsg" class="alert alert-danger text-center">Your form has errors</div>
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" class="form-control" required>
               </div>
-              <div class="form-group col-md-12>
+              <div class="form-group">
                 <label for="body">Body</label>
-                <textarea id="body" name="body" class="form-control"></textarea>
+                <textarea id="body" name="body" class="form-control" rows="10"></textarea>
               </div>
               <div class="row">
                 <div class="form-group col-md-6">
@@ -165,14 +165,14 @@ var postsApp = (function() {
               <input type="hidden" id="_id" name="_id" value="${data.post._id}">
               <div id="formMsg" class="alert alert-danger text-center">Your form has errors</div>
 
-              <div class="form-group col-md-12">
+              <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title"
                 class="form-control" value="${data.post.title}">
               </div>
-              <div class="form-group col-md-12>
+              <div class="form-group">
                 <label for="body">Body</label>
-                <textarea id="body" name="body"
+                <textarea id="body" name="body" rows="10"
                 class="form-control">${data.post.body}</textarea>
               </div>
               <div class="row">

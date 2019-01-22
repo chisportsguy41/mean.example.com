@@ -17,7 +17,8 @@ var Posts = new Schema({
   keywords: String,
   body: String,
   published: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
   created: {
     type: Date,

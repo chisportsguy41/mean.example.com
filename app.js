@@ -97,7 +97,8 @@ app.use(function(req,res,next){
   var subs = [
     '/public/',
     '/api/auth/',
-    '/api/posts'
+    '/posts/view/',
+    '/error'
   ];
 
   for(var sub of subs){

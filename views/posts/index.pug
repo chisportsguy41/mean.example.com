@@ -1,12 +1,11 @@
 extends ../layout
 
 block content
-  h1 The Blog
+  h1= title
   for post in posts
 
-    div.article
-      a(href='posts/' +   post.slug)
-        h2= post.title
+      div.post
+        a(href='/posts/view/' +   post.slug)
+          h2= post.title
         div!= post.description
-
-  script(src='/dist/js/posts.app.min.js')
+        hr
