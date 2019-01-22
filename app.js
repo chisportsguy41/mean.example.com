@@ -86,7 +86,8 @@ app.use(function(req,res,next){
   //return next();
   var whitelist = [
     '/',
-    '/auth'
+    '/auth',
+    '/posts'
   ];
 
   if(whitelist.indexOf(req.url) !== -1) {
@@ -95,7 +96,8 @@ app.use(function(req,res,next){
 
   var subs = [
     '/public/',
-    '/api/auth/'
+    '/api/auth/',
+    '/api/posts'
   ];
 
   for(var sub of subs){
