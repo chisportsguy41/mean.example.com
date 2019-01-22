@@ -10,11 +10,14 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var Users = require('./models/users');
+var Posts = require('./models/posts');
 var apiAuthRouter = require('./routes/api/auth');
 var authRouter = require('./routes/auth');
 var apiUsersRouter = require('./routes/api/users');
+var apiPostsRouter = require('./routes/api/posts');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var postsRouter = require('./routes/posts');
 
 var app = express();
 
@@ -111,6 +114,8 @@ app.use(function(req,res,next){
 app.use('/', indexRouter);
 app.use('/api/users', apiUsersRouter);
 app.use('/users', usersRouter);
+app.use('/api/posts', apiPostsRouter);
+app.use('/posts', postsRouter);
 app.use('/api/auth', apiAuthRouter);
 app.use('/auth', authRouter);
 

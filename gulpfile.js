@@ -14,7 +14,8 @@ gulp.task('default', ['watch']);
 gulp.task('build-js', [
   'build-main-js',
   'build-auth-js',
-  'build-users-js'
+  'build-users-js',
+  'build-posts-js'
 ]);
 
 //Compile all CSS tasks
@@ -68,6 +69,18 @@ gulp.task('build-users-js', function() {
   .pipe(gulp.dest('public/dist/js'));
 
   return merge(userApp);
+});
+
+gulp.task('build-posts-js', function() {
+
+  var postApp = gulp.src([
+    'src/js/posts.app.js',
+  ])
+  .pipe(concat('posts.app.min.js'))
+  .pipe(uglify())
+  .pipe(gulp.dest('public/dist/js'));
+
+  return merge(postApp);
 });
 
 //Recompile SCSS/JS on save
