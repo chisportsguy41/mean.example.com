@@ -4,7 +4,7 @@ var router = express.Router();
 var Posts = require('../../models/posts');
 
 router.get('/', function(req, res, next) {
-  Posts.find({}, null, {sort: 'title'}, function(err, posts){
+  Posts.find({}, null, {sort: '-published'}, function(err, posts){
     if(err){
      return res.json({'success':false, 'error': err});
    }
@@ -27,7 +27,8 @@ router.post('/', function(req, res) {
     title: req.body.title,
     description: req.body.description,
     keywords: req.body.keywords,
-    body: req.body.body
+    body: req.body.body,
+    published: req.body.published
   }), function(err, post){
 
     if(err){
@@ -63,6 +64,10 @@ router.put('/', function(req, res){
 
     if(data.body){
     post.body = data.body;
+    }
+
+    if(data.published){
+      post.published = data.published;
     }
 
     post.save(function(err){

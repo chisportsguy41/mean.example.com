@@ -17,8 +17,7 @@ var Posts = new Schema({
   keywords: String,
   body: String,
   published: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   created: {
     type: Date,
@@ -41,7 +40,9 @@ Posts.pre('validate', function(next){
 
   //If no published date has been provided use the current date
   if(this.published==undefined){
-    this.modified = new Date().toISOString();
+    this.published = new Date().toISOString();
+  } else {
+    this.published = new Date(this.published).toISOString();
   }
 
   this.modified = new Date().toISOString();

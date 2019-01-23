@@ -23,11 +23,13 @@ var postsApp = (function() {
       //Loop each user record into it's own HTML table row, each user should
       //have a link a user view
       for (let i=0; i<posts.length; i++) {
+        var published = new Date(posts[i]['published']).toISOString().slice(0, 16).replace('T', ' ');
         rows = rows + `<tr>
           <td>
             <a href="#view-${posts[i]['_id']}">${posts[i]['title']}</a>
           </td>
           <td>${posts[i]['description']}</td>
+          <td>${published}</td>
         </tr>`;
       }
 
@@ -46,6 +48,7 @@ var postsApp = (function() {
               <tr>
                 <td>Title</td>
                 <td>Description</td>
+                <td>Published</td>
               </tr>
             </thead>
             <tbody>${rows}</tbody>
@@ -93,6 +96,7 @@ var postsApp = (function() {
 
   function createPost(){
     var app = document.getElementById('app');
+    var now = new Date().toISOString().slice(0, 16);
 
     var form =  `
         <div class="card">
@@ -124,7 +128,11 @@ var postsApp = (function() {
                   <input type="text" id="keywords" name="keywords" class="form-control">
                 </div>
               </div>
-
+              <div class="form-group">
+                <label for="published">Publication Date</label>
+                <input type="datetime-local" id="published" name="published"
+                class="form-control" value="${now}">
+              </div>
               <div class="text-right">
                 <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-sm-block">
               </div>
@@ -151,7 +159,7 @@ var postsApp = (function() {
     xhr.onload = function() {
       let app = document.getElementById('app');
       let data = JSON.parse(xhr.response);
-
+      var published = new Date(data.post.published).toISOString().slice(0, 16);
       var form =  `
         <div class="card">
           <div class="card-header clearfix">
@@ -187,6 +195,11 @@ var postsApp = (function() {
                   <input type="text" id="keywords" name="keywords"
                   class="form-control" value="${data.post.keywords}">
                 </div>
+              </div>
+              <div class="form-group">
+                <label for="published">Publication Date</label>
+                <input type="datetime-local" id="published" name="published"
+                class="form-control" value="${published}">
               </div>
 
               <div class="text-right">
@@ -266,38 +279,6 @@ var postsApp = (function() {
         alert('Unknown error, the user could not be deleted');
       }
     }
-  }
-
-  function processRequest(formId, url, method){
-    let form = document.getElementById(formId);
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-
-      let formData = new FormData(form);
-      let uri = `${window.location.origin}${url}`;
-      let xhr = new XMLHttpRequest();
-      xhr.open(method, uri);
-
-      xhr.setRequestHeader(
-        'Content-Type',
-        'application/json; charset=UTF-8'
-      );
-
-      let object = {};
-      formData.forEach(function(value, key){
-        object[key]=value;
-      });
-
-      xhr.send(JSON.stringify(object));
-      xhr.onload = function(){
-        let data = JSON.parse(xhr.response);
-        if(data.success===true){
-          window.location.href = '/users/app';
-        }else{
-          document.getElementById('formMsg').style.display='block';
-        }
-      }
-    });
   }
 
   function processRequest(formId, url, method){

@@ -3,7 +3,7 @@ var router = express.Router();
 var Posts = require('../models/posts');
 
 router.get('/', function(req, res, next) {
-  Posts.find({}, null, {sort: 'title'}, function(err, posts){
+  Posts.find({published: { '$lte': new Date().toISOString() }}, null, {sort: '-published'}, function(err, posts){
     if(err){
       return res.render('/error', {'error': err});
     } else {
