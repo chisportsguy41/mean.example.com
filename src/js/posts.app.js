@@ -30,9 +30,11 @@ var postsApp = (function() {
           <td>
             <a href="#view-${posts[i]['_id']}">${posts[i]['title']}</a>
           </td>
+          <td id="author${posts[i]['userID']}"></td>
           <td>${posts[i]['description']}</td>
           <td>${published}</td>
         </tr>`;
+        findAuthor(posts[i]['userID']);
       }
 
       //Create a users panel, add a table to the panel,
@@ -49,6 +51,7 @@ var postsApp = (function() {
             <thead>
               <tr>
                 <td>Title</td>
+                <td>Author</td>
                 <td>Description</td>
                 <td>Published</td>
               </tr>
@@ -70,7 +73,7 @@ var postsApp = (function() {
 
     xhr.setRequestHeader(
       'Content-Type',
-      'appllication/json; charset=UTF-8'
+      'application/json; charset=UTF-8'
     );
 
     xhr.send();
@@ -88,17 +91,22 @@ var postsApp = (function() {
           </div>
         </div>
         <div class="card-body">
+          <p><em>By <span id="author${data.post.userID}"></span></em><p>
+          <hr>
           <div>${data.post.body}</div>
         </div>
       </div>`;
 
       app.innerHTML = card;
+      findAuthor(data.post.userID);
     }
   }
 
   function createPost(){
     var app = document.getElementById('app');
-    var now = new Date().toISOString().slice(0, 16);
+    var now = new Date();
+    var offset = now.getTimezoneOffset() * 60000;
+    var newNow = new Date(now - offset).toISOString().slice(0, 16);
 
     var form =  `
         <div class="card">
@@ -133,7 +141,7 @@ var postsApp = (function() {
               <div class="form-group">
                 <label for="published">Publication Date</label>
                 <input type="datetime-local" id="published" name="published"
-                class="form-control" value="${now}">
+                class="form-control" value="${newNow}">
               </div>
               <div class="text-right">
                 <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-sm-block">
@@ -315,6 +323,26 @@ var postsApp = (function() {
         }
       }
     });
+  }
+
+  function findAuthor(id) {
+    var author = '';
+    let uri = `${window.location.origin}/api/users/${id}`;
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', uri);
+
+    xhr.setRequestHeader(
+      'Content-Type',
+      'appllication/json; charset=UTF-8'
+    );
+
+    xhr.send();
+
+    xhr.onload = function() {
+      let data = JSON.parse(xhr.response);
+      author = data.user.first_name + ' ' + data.user.last_name;
+      document.getElementById(('author'+ id)).innerHTML = author;
+    }
   }
 
   return {

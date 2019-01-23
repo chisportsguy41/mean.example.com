@@ -7,13 +7,14 @@ router.get('/', function(req, res, next) {
     if(err){
       return res.render('/error', {'error': err});
     } else {
-      return res.render('posts/index', { title: 'The Blog', 'posts': posts});
+      return res.render('posts/index',
+      { title: 'The Blog', description: 'This is a blog.', keywords: 'keywords, blog', 'posts': posts});
     }
   });
 });
 
 router.get('/app', function(req, res, next) {
-  res.render('posts/app', {title: 'The Blog'});
+  res.render('posts/app', {title: 'The Backend'});
 });
 
 router.get('/view/:slug', function(req, res, next) {
@@ -22,7 +23,8 @@ router.get('/view/:slug', function(req, res, next) {
     if(err){
       return res.render('/error', {'error': err});
     } else {
-      return res.render('posts/view', { title: post.title, 'post': post});
+      return res.render('posts/view',
+      { title: post.title, description: post.description, keywords: post.keywords, 'post': post});
     }
   });
 });

@@ -16,6 +16,11 @@ html
     link(rel='stylesheet' href='/dist/css/main.min.css')
 
     title= title
+    if description
+      meta(name='description', content=description)
+    if keywords
+      meta(name='keywords', content=keywords)
+
   body
     include includes/navbar
     .container

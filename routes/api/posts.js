@@ -29,6 +29,7 @@ router.post('/', function(req, res) {
     keywords: req.body.keywords,
     body: req.body.body,
     published: req.body.published,
+    userID: req.session.passport.user.id,
     offset: new Date(req.body.published).getTimezoneOffset()
   }), function(err, post){
 

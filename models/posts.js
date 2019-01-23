@@ -16,6 +16,7 @@ var Posts = new Schema({
   description: String,
   keywords: String,
   body: String,
+  userID: String,
   published: {
     type: Date
   },
