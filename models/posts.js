@@ -25,6 +25,9 @@ var Posts = new Schema({
   },
   modified: {
     type: Date
+  },
+  offset: {
+    type: Number
   }
 });
 

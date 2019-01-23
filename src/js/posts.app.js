@@ -23,7 +23,9 @@ var postsApp = (function() {
       //Loop each user record into it's own HTML table row, each user should
       //have a link a user view
       for (let i=0; i<posts.length; i++) {
-        var published = new Date(posts[i]['published']).toISOString().slice(0, 16).replace('T', ' ');
+        var date = new Date(posts[i]['published']);
+        var offset = posts[i]['offset'] * 60000;
+        var published = new Date(date-offset).toISOString().slice(0, 16).replace('T', ' ');
         rows = rows + `<tr>
           <td>
             <a href="#view-${posts[i]['_id']}">${posts[i]['title']}</a>
@@ -159,7 +161,9 @@ var postsApp = (function() {
     xhr.onload = function() {
       let app = document.getElementById('app');
       let data = JSON.parse(xhr.response);
-      var published = new Date(data.post.published).toISOString().slice(0, 16);
+      var date = new Date(data.post.published);
+      var offset = data.post.offset * 60000;
+      var published = new Date(date-offset).toISOString().slice(0, 16);
       var form =  `
         <div class="card">
           <div class="card-header clearfix">

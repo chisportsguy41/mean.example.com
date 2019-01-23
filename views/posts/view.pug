@@ -4,7 +4,7 @@ block content
   post
     h1= post.title
     div
-      - var date = new Date(post.published).toISOString().slice(0, 16).replace('T', ' ');
+      - var date = new Date(post.published-(post.offset * 60000)).toISOString().slice(0, 16).replace('T', ' ');
       small Posted: #{date}
     hr
     div!= post.body

@@ -28,7 +28,8 @@ router.post('/', function(req, res) {
     description: req.body.description,
     keywords: req.body.keywords,
     body: req.body.body,
-    published: req.body.published
+    published: req.body.published,
+    offset: new Date(req.body.published).getTimezoneOffset()
   }), function(err, post){
 
     if(err){
@@ -68,6 +69,7 @@ router.put('/', function(req, res){
 
     if(data.published){
       post.published = data.published;
+      post.offset = new Date(data.published).getTimezoneOffset();
     }
 
     post.save(function(err){
