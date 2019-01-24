@@ -20,8 +20,8 @@ var postsApp = (function() {
       let table = '';
       let rows = '';
 
-      //Loop each user record into it's own HTML table row, each user should
-      //have a link a user view
+      //Loop each user record into it's own HTML table row
+      //each user should have a link a user view
       for (let i=0; i<posts.length; i++) {
         var date = new Date(posts[i]['published']);
         var offset = posts[i]['offset'] * 60000;
@@ -30,11 +30,12 @@ var postsApp = (function() {
           <td>
             <a href="#view-${posts[i]['_id']}">${posts[i]['title']}</a>
           </td>
-          <td id="author${posts[i]['userID']}"></td>
+          <td id="author${i}"></td>
           <td>${posts[i]['description']}</td>
           <td>${published}</td>
+          <td><a href="#edit-${posts[i]['_id']}">Edit</a> | <a href="#delete-${posts[i]['_id']}">Delete</a></td>
         </tr>`;
-        findAuthor(posts[i]['userID']);
+        findAuthor(posts[i]['userID'], i);
       }
 
       //Create a users panel, add a table to the panel,
@@ -54,6 +55,7 @@ var postsApp = (function() {
                 <td>Author</td>
                 <td>Description</td>
                 <td>Published</td>
+                <td>Actions</td>
               </tr>
             </thead>
             <tbody>${rows}</tbody>
@@ -91,7 +93,7 @@ var postsApp = (function() {
           </div>
         </div>
         <div class="card-body">
-          <p><em>By <span id="author${data.post.userID}"></span></em><p>
+          <p><em>By <span id="author1"></span></em><p>
           <hr>
           <div>${data.post.body}</div>
         </div>
@@ -325,7 +327,7 @@ var postsApp = (function() {
     });
   }
 
-  function findAuthor(id) {
+  function findAuthor(id, index=1) {
     var author = '';
     let uri = `${window.location.origin}/api/users/${id}`;
     let xhr = new XMLHttpRequest();
@@ -341,7 +343,7 @@ var postsApp = (function() {
     xhr.onload = function() {
       let data = JSON.parse(xhr.response);
       author = data.user.first_name + ' ' + data.user.last_name;
-      document.getElementById(('author'+ id)).innerHTML = author;
+      document.getElementById(('author'+ index)).innerHTML = author;
     }
   }
 
