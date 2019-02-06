@@ -22,6 +22,16 @@ router.get('/:slug', function(req,res){
   });
 });
 
+router.get('/byUser/:userID', function(req,res){
+  var userID = req.params.userID;
+  Posts.find({'userID':userID}, null, {sort: '-published'}, function(err, posts){
+    if(err){
+      return res.json({'success':false, 'error': err});
+    }
+      return res.json({'success':true, 'posts': posts});
+    });
+  });
+
 router.post('/', function(req, res) {
   Posts.create(new Posts({
     title: req.body.title,
