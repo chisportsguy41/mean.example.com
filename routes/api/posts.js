@@ -12,9 +12,9 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/:id', function(req,res){
-  var id = req.params.id;
-  Posts.findOne({'_id':id}, function(err, post){
+router.get('/:slug', function(req,res){
+  var slug = req.params.slug;
+  Posts.findOne({'slug':slug}, function(err, post){
     if(err){
       return res.json({'success':false, 'error': err});
     }
@@ -28,9 +28,7 @@ router.post('/', function(req, res) {
     description: req.body.description,
     keywords: req.body.keywords,
     body: req.body.body,
-    published: req.body.published,
-    userID: req.session.passport.user.id,
-    offset: new Date(req.body.published).getTimezoneOffset()
+    published: req.body.published
   }), function(err, post){
 
     if(err){
