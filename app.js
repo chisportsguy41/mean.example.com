@@ -104,8 +104,7 @@ app.use(function(req,res,next){
   var whitelist = [
     '/',
     '/auth',
-    '/posts',
-    '/cms'
+    '/posts'
   ];
 
   if(whitelist.indexOf(req.url) !== -1) {
@@ -116,7 +115,7 @@ app.use(function(req,res,next){
     '/public/',
     '/api/auth/',
     '/posts/view/',
-    '/ng-cms/posts/view/'
+    '/ionicAuth'
   ];
 
   for(var sub of subs){
