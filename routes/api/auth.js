@@ -50,11 +50,7 @@ router.post('/login', function(req, res, next) {
 
 router.delete('/logout', function(req, res){
   req.logout();
-  if(!req.session.passport.user){
     return res.json({success: true});
-  } else {
-    return res.json({success: false});
-  }
 });
 
 module.exports = router;
