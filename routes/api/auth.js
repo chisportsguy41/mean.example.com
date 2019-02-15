@@ -50,7 +50,7 @@ router.post('/login', function(req, res, next) {
 
 router.delete('/logout', function(req, res){
   req.logout();
-    return res.json({success: true});
+  return res.json({success: true});
 });
 
 module.exports = router;
