@@ -31,7 +31,6 @@ var Games = new Schema({
   }
 });
 
-//Auto set the slug prior to validation
 Games.pre('save', function(next){
   this.modified = new Date().toISOString();
   next();

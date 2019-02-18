@@ -34,25 +34,30 @@ router.get('/join/:type', function(req,res){
 
 router.post('/', function(req, res) {
   Games.create(new Games({
-
+    gameType: req.body.gameType,
+    name: req.body.name,
+    shoes: req.body.shoes,
+    players: req.body.players,
+    type: req.body.type,
+    protected: req.body.protected,
+    password: req.body.password
   }), function(err, game){
 
     if(err){
       return res.json({success: false, game: req.body, error: err});
+    } else {
+      return res.json({success: true, game: game});
     }
-
-    return res.json({success: true, game: game});
-
   });
 });
 
-router.put('/', function(req, res){
+/* router.put('/', function(req, res){
 
-  Posts.findOne({'_id': req.body._id}, function(err, post){
+  Games.findOne({'_id': req.body._id}, function(err, game){
 
   if(err) {
     return res.json({success: false, error: err});
-  }else if(post) {
+  }else if(game) {
 
     let data = req.body;
 
@@ -77,11 +82,11 @@ router.put('/', function(req, res){
       post.offset = new Date(data.published).getTimezoneOffset();
     }
 
-    post.save(function(err){
+    game.save(function(err){
       if(err){
         return res.json({success: false, error: err});
       }else{
-        return res.json({success: true, post:post});
+        return res.json({success: true, game:game});
       }
     });
 
@@ -89,13 +94,13 @@ router.put('/', function(req, res){
 
   });
 
-});
+});*/
 
-router.delete('/:postId', function(req,res){
+router.delete('/:id', function(req,res){
 
-  var postId = req.params.postId;
+  var id = req.params.id;
 
-  Posts.remove({'_id':postId}, function(err,removed){
+  Games.remove({'_id':id}, function(err,removed){
 
     if(err){
       return res.json({success: false, error: err});
