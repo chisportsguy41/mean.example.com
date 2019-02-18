@@ -32,11 +32,11 @@ var Games = new Schema({
 });
 
 //Auto set the slug prior to validation
-Posts.pre('save', function(next){
+Games.pre('save', function(next){
   this.modified = new Date().toISOString();
   next();
 });
 
-Users.plugin(uniqueValidator);
+Games.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Games', Games);
