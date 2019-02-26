@@ -18,6 +18,7 @@ var Games = new Schema({
   type: String,
   protected: Boolean,
   password: String,
+  pot: Number,
   hasStarted: {
     type: Boolean,
     default: false

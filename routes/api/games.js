@@ -40,7 +40,8 @@ router.post('/', function(req, res) {
     players: req.body.players,
     type: req.body.type,
     protected: req.body.protected,
-    password: req.body.password
+    password: req.body.password,
+    pot: req.body.pot
   }), function(err, game){
 
     if(err){
