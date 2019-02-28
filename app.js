@@ -26,7 +26,7 @@ var app = express();
 if(process.env.NODE_ENV==='production') {
   var config = require('../config.prod');
 } else {
-  var config = require('./config.prod');
+  var config = require('../config.prod');
 }
 
 mongoose.connect(config.mongodb, { useNewUrlParser: true });
